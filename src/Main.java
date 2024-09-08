@@ -29,21 +29,31 @@ public class Main {
                     BufferedReader reader =
                             new BufferedReader(fileReader);
                     String line;
-                    int max = 0;
-                    int min = 1024;
+                    int ya;
+                    int go;
                     int sumLength = 0;
                     while ((line = reader.readLine()) != null) {
                         int length = line.length();
                         if (length > 0 && length <= 1024){
                             sumLength = sumLength+1;
-                            if (length>max)max = length;
-                            if (length<min)min = length;
+
+                         /* if(line.contains("(")&&line.contains(")")&&(line.indexOf('(')+1)<(line.indexOf(')'))) {
+                            String firstBrackets = line.substring((line.indexOf('(')+1),(line.indexOf(')')));
+                            String[] parts = firstBrackets.split(";");
+                            for (String part:parts){
+                                part.trim();
+                            }
+                            if (parts.length >= 2) {
+                                String fragment = parts[1];
+                                System.out.println(fragment);
+                            }}*/
+
                         }else throw new IllegalCountExeption("Невалидная длина строки");
+
                     }
                     System.out.println("Работа с файлом закончена");
                     System.out.println("Общее количество строк в файле " + sumLength);
-                    System.out.println("Длина самой короткой строки "+ min);
-                    System.out.println("Длина самой длинной строки "+ max);
+
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
