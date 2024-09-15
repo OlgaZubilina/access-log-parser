@@ -11,6 +11,7 @@ public class Statistics {
     int winOsCount = 0;
     int linuxOsCount = 0;
     int macOsCount = 0;
+    int edgeCount = 0;
     List<LogEntry> logs = new ArrayList<>();
 
     void addEntry(LogEntry logEntry) {
@@ -23,6 +24,7 @@ public class Statistics {
         if (logEntry.agent.typeOs == TypeOs.LINUX) linuxOsCount++;
         if (logEntry.agent.typeOs == TypeOs.MACINTOSH) macOsCount++;
         if (logEntry.agent.typeOs == TypeOs.WINDOWS) winOsCount++;
+        if (logEntry.agent.typeBrowser == Browser.EDGE.name()) edgeCount++;
     }
 
     int getTrafficRate(LocalDateTime maxTime, LocalDateTime minTime, Long totalTraffic) {
@@ -42,6 +44,7 @@ public class Statistics {
                 ", Число запросов от Googlebot: " + go +
                 ", Число запросов c ос Windows: " + winOsCount +
                 ", Число запросов c ос Linux: " + linuxOsCount +
-                ", Число запросов c ос Mac OS: " + macOsCount;
+                ", Число запросов c ос Mac OS: " + macOsCount+
+        ", Через Edge: " + edgeCount;
     }
 }

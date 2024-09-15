@@ -1,9 +1,12 @@
+import java.util.ArrayList;
+
 public class UserAgent {
     String userAgentInfo;
     TypeOs typeOs;
     String typeBrowser;
-    boolean yandexBot;
+        boolean yandexBot;
     boolean googleBot;
+
 
     public UserAgent(String line) {
         String[] fragments = line.split(" ");
@@ -19,14 +22,48 @@ public class UserAgent {
             if (this.userAgentInfo.contains("Mac")) {
                 this.typeOs = TypeOs.MACINTOSH;
             }
-            if (this.userAgentInfo.contains("Win")) {
+            else if (this.userAgentInfo.contains("Win")) {
                 this.typeOs = TypeOs.WINDOWS;
             }
-            if (this.userAgentInfo.contains("Linux")) {
+            else if (this.userAgentInfo.contains("Linux")) {
                 this.typeOs = TypeOs.LINUX;
             }
+
+           this.setTypeBrowser(this.userAgentInfo);
         }
     }
+
+    public String getTypeBrowser() {
+        return typeBrowser;
+    }
+
+    public TypeOs getTypeOs() {
+        return typeOs;
+    }
+
+    public boolean isYandexBot() {
+        return yandexBot;
+    }
+
+    public String getUserAgentInfo() {
+        return userAgentInfo;
+    }
+
+    public boolean isGoogleBot() {
+        return googleBot;
+    }
+
+    private void setTypeBrowser(String userAgentInfo) {
+        Browser[] browsers = Browser.values();
+        for (int i=0;i<browsers.length;i++) {
+            if (browsers[i].getBrowser(userAgentInfo)==null) continue;
+            else {this.typeBrowser =browsers[i].name();
+                break;}
+
+        }
+    }
+
+
 
     @Override
     public String toString() {
@@ -42,4 +79,54 @@ public class UserAgent {
 }
 enum TypeOs {
     MACINTOSH, WINDOWS, LINUX
+}
+enum Browser{
+
+
+
+    FIREFOX {
+        String name = "Firefox";
+        @Override
+        public String getBrowser(String str){if (str.contains("Firefox/"))
+            return name;
+            return null;
+        }
+    }
+    ,OPERA{
+        String name = "Opera";
+        @Override
+        public String getBrowser(String str){if (str.contains("OPR/")||str.contains("Opera/"))
+            return name;
+            return null;
+        }
+    },
+    EDGE {
+        String name = "Edge";
+        @Override
+        public String getBrowser(String str){if (str.contains("Edg/"))
+            return name;
+            return null;
+        }
+    }
+    ,CHROME {
+         String name = "Chrome";
+@Override
+        public String getBrowser(String str) {
+            if (str.contains("Chrome/"))
+                return name;
+            return null;
+        }
+    }
+    ,SAFARI {
+        String name = "Safari";
+
+        @Override
+        public String getBrowser(String str) {
+            if (str.contains("Safari/") && str.contains("Mac"))
+                return name;
+            return null;
+        }};
+
+public String getBrowser(String str){return null;}
+
 }
