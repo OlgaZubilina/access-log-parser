@@ -1,13 +1,22 @@
+homework
 import java.util.ArrayList;
 
+
+master
 public class UserAgent {
     String userAgentInfo;
     TypeOs typeOs;
     String typeBrowser;
+homework
         boolean yandexBot;
     boolean googleBot;
 
 
+=======
+    boolean yandexBot;
+    boolean googleBot;
+
+master
     public UserAgent(String line) {
         String[] fragments = line.split(" ");
         if (!(fragments[11].equals("\"-\"")))
@@ -22,6 +31,7 @@ public class UserAgent {
             if (this.userAgentInfo.contains("Mac")) {
                 this.typeOs = TypeOs.MACINTOSH;
             }
+homework
             else if (this.userAgentInfo.contains("Win")) {
                 this.typeOs = TypeOs.WINDOWS;
             }
@@ -65,6 +75,17 @@ public class UserAgent {
 
 
 
+=======
+            if (this.userAgentInfo.contains("Win")) {
+                this.typeOs = TypeOs.WINDOWS;
+            }
+            if (this.userAgentInfo.contains("Linux")) {
+                this.typeOs = TypeOs.LINUX;
+            }
+        }
+    }
+
+master
     @Override
     public String toString() {
         return "UserAgent{" +
@@ -79,6 +100,7 @@ public class UserAgent {
 }
 enum TypeOs {
     MACINTOSH, WINDOWS, LINUX
+ homework
 }
 enum Browser{
 
@@ -130,3 +152,6 @@ enum Browser{
 public String getBrowser(String str){return null;}
 
 }
+=======
+}
+ master
