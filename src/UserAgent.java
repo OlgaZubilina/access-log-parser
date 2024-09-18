@@ -1,22 +1,13 @@
-homework
 import java.util.ArrayList;
 
-
-master
 public class UserAgent {
     String userAgentInfo;
     TypeOs typeOs;
     String typeBrowser;
-homework
-        boolean yandexBot;
-    boolean googleBot;
-
-
-=======
     boolean yandexBot;
     boolean googleBot;
 
-master
+
     public UserAgent(String line) {
         String[] fragments = line.split(" ");
         if (!(fragments[11].equals("\"-\"")))
@@ -31,7 +22,6 @@ master
             if (this.userAgentInfo.contains("Mac")) {
                 this.typeOs = TypeOs.MACINTOSH;
             }
-homework
             else if (this.userAgentInfo.contains("Win")) {
                 this.typeOs = TypeOs.WINDOWS;
             }
@@ -39,7 +29,7 @@ homework
                 this.typeOs = TypeOs.LINUX;
             }
 
-           this.setTypeBrowser(this.userAgentInfo);
+            this.setTypeBrowser(this.userAgentInfo);
         }
     }
 
@@ -75,17 +65,6 @@ homework
 
 
 
-=======
-            if (this.userAgentInfo.contains("Win")) {
-                this.typeOs = TypeOs.WINDOWS;
-            }
-            if (this.userAgentInfo.contains("Linux")) {
-                this.typeOs = TypeOs.LINUX;
-            }
-        }
-    }
-
-master
     @Override
     public String toString() {
         return "UserAgent{" +
@@ -100,7 +79,6 @@ master
 }
 enum TypeOs {
     MACINTOSH, WINDOWS, LINUX
- homework
 }
 enum Browser{
 
@@ -131,8 +109,8 @@ enum Browser{
         }
     }
     ,CHROME {
-         String name = "Chrome";
-@Override
+        String name = "Chrome";
+        @Override
         public String getBrowser(String str) {
             if (str.contains("Chrome/"))
                 return name;
@@ -149,9 +127,6 @@ enum Browser{
             return null;
         }};
 
-public String getBrowser(String str){return null;}
+    public String getBrowser(String str){return null;}
 
 }
-=======
-}
- master
