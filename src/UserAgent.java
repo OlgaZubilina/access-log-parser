@@ -4,7 +4,7 @@ public class UserAgent {
     String typeBrowser;
     boolean yandexBot;
     boolean googleBot;
-
+    boolean isBot;
 
     public UserAgent(String line) {
         String[] fragments = line.split(" ");
@@ -19,6 +19,7 @@ public class UserAgent {
             if (this.userAgentInfo.contains("Googlebot")) this.googleBot = true;
             this.setTypeOs(this.userAgentInfo);
             this.setTypeBrowser(this.userAgentInfo);
+            if (this.userAgentInfo.contains("bot") || this.userAgentInfo.contains("Bot")) this.isBot = true;
         }
     }
 

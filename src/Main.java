@@ -39,13 +39,17 @@ public class Main {
     }
 
     private static void printOutput(LogParser result) {
-        System.out.println();
+        System.out.println("*******************************************************");
         System.out.println("Работа с файлом закончена");
+        System.out.println("Количество ошибочных запросов в час: " + result.st.getErrorsRate(result.st.maxTime, result.st.minTime, result.st.logs));
+        System.out.println("Количество посещений в час: " + result.st.getVizitRate(result.st.maxTime, result.st.minTime, result.st.logs));
+        System.out.println("Средняя посещаемость одним пользователем: " + result.st.getAverageAttendance(result.st.logs));
         System.out.println("Общее количество строк в файле " + result.sumLength);
-        System.out.println(result.st);
+        // System.out.println(result.st);
         System.out.println("Статистика по операционным системам: " + result.st.getOsStatistic(result.st.osCount));
         System.out.println("Статистика по браузерам: " + result.st.getBrowsersStatistic(result.st.browsersCount));
         System.out.println("Использованный трафик (килобайт/час): " + result.st.getTrafficRate(result.st.maxTime, result.st.minTime, result.st.totalTraffic));
+        System.out.println("*******************************************************");
     }
 
     private static LogParser getParseLog(BufferedReader reader) throws IOException {
