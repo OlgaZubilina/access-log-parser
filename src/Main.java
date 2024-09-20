@@ -44,6 +44,7 @@ public class Main {
         System.out.println("Общее количество строк в файле " + result.sumLength);
         System.out.println(result.st);
         System.out.println("Статистика по операционным системам: " + result.st.getOsStatistic(result.st.osCount));
+        System.out.println("Статистика по браузерам: " + result.st.getBrowsersStatistic(result.st.browsersCount));
         System.out.println("Использованный трафик (килобайт/час): " + result.st.getTrafficRate(result.st.maxTime, result.st.minTime, result.st.totalTraffic));
     }
 

@@ -10,7 +10,16 @@ public enum Browser {
                 return name;
             else return null;
         }
-    }, OPERA {
+    }, IEXPLORER {
+        String name = "IExplorer";
+
+        @Override
+        public String getBrowser(String str) {
+            if (str.contains("MSIE"))
+                return name;
+            else return null;
+        }
+    },OPERA {
         String name = "Opera";
 
         @Override
