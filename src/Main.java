@@ -24,34 +24,60 @@ public class Main {
             getStatisticLogs(path);
         }
 
-
     }
 
     private static void getStatisticLogs(String path) {
         try {
-            FileReader fileReader = new FileReader(path);
-            BufferedReader reader =
-                    new BufferedReader(fileReader);
-            String line;
-            Statistics st = new Statistics();
-            int sumLength = 0;
-            while ((line = reader.readLine()) != null) {
-                int length = line.length();
-                if (length > 0 && length <= 1024) {
-                    sumLength = sumLength + 1;
-                    LogEntry log = new LogEntry(line);
-                    st.addEntry(log);
-                } else throw new IllegalCountExeption("Невалидная длина строки");
-            }
-            System.out.println("Работа с файлом закончена");
-            System.out.println("Общее количество строк в файле " + sumLength);
-            System.out.println(st);
-            System.out.println("Использованный трафик (килобайт/час): " + st.getTrafficRate(st.maxTime, st.minTime, st.totalTraffic));
+            BufferedReader reader = readFile(path);
+            LogParser result = getParseLog(reader);
+            printOutput(result);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static void printOutput(LogParser result) {
+        System.out.println();
+        System.out.println("Работа с файлом закончена");
+        System.out.println("Общее количество строк в файле " + result.sumLength);
+        System.out.println(result.st);
+        System.out.println("Статистика по операционным системам: " + result.st.getOsStatistic(result.st.osCount));
+        System.out.println("Использованный трафик (килобайт/час): " + result.st.getTrafficRate(result.st.maxTime, result.st.minTime, result.st.totalTraffic));
+    }
+
+    private static LogParser getParseLog(BufferedReader reader) throws IOException {
+        String line;
+        Statistics st = new Statistics();
+        int sumLength = 0;
+        while ((line = reader.readLine()) != null) {
+            int length = line.length();
+            if (length > 0 && length <= 1024) {
+                sumLength = sumLength + 1;
+                LogEntry log = new LogEntry(line);
+                st.addEntry(log);
+            } else throw new IllegalCountExeption("Невалидная длина строки");
+        }
+        LogParser result = new LogParser(st, sumLength);
+        return result;
+    }
+
+    private static class LogParser {
+        public final Statistics st;
+        public final int sumLength;
+
+        public LogParser(Statistics st, int sumLength) {
+            this.st = st;
+            this.sumLength = sumLength;
+        }
+    }
+
+    private static BufferedReader readFile(String path) throws FileNotFoundException {
+        FileReader fileReader = new FileReader(path);
+        BufferedReader reader =
+                new BufferedReader(fileReader);
+        return reader;
     }
 }
 
