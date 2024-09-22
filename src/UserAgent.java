@@ -6,6 +6,7 @@ public class UserAgent {
     boolean googleBot;
     boolean isBot;
 
+
     public UserAgent(String line) {
         String[] fragments = line.split(" ");
         if (!(fragments[11].equals("\"-\"")))

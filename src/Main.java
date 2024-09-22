@@ -43,13 +43,17 @@ public class Main {
         System.out.println("Работа с файлом закончена");
         System.out.println("Количество ошибочных запросов в час: " + result.st.getErrorsRate(result.st.maxTime, result.st.minTime, result.st.logs));
         System.out.println("Количество посещений в час: " + result.st.getVizitRate(result.st.maxTime, result.st.minTime, result.st.logs));
+        System.out.println("Пиковая посещаемость в секунду: " + result.st.getMaxAttendance(result.st.logs));
+        System.out.println("Максимальная посещаемость одним пользователем: " + result.st.getMaxVizitsForUser(result.st.users));
         System.out.println("Средняя посещаемость одним пользователем: " + result.st.getAverageAttendance(result.st.logs));
+        System.out.println("Средняя посещаемость одним пользователем: " + result.st.getAverageAttendance1(result.st.users));
         System.out.println("Общее количество строк в файле " + result.sumLength);
-        // System.out.println(result.st);
+        System.out.println("Список сайтов: "+ result.st.sites);
         System.out.println("Статистика по операционным системам: " + result.st.getOsStatistic(result.st.osCount));
         System.out.println("Статистика по браузерам: " + result.st.getBrowsersStatistic(result.st.browsersCount));
         System.out.println("Использованный трафик (килобайт/час): " + result.st.getTrafficRate(result.st.maxTime, result.st.minTime, result.st.totalTraffic));
         System.out.println("*******************************************************");
+
     }
 
     private static LogParser getParseLog(BufferedReader reader) throws IOException {

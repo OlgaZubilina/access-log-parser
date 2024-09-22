@@ -1,9 +1,9 @@
+
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
+
+
 
 public class Statistics {
     Long totalTraffic = 0L;
@@ -16,6 +16,9 @@ public class Statistics {
     HashMap<String, Integer> osCount;
     HashSet<String> pagesNotFound = new HashSet<>();
     HashMap<String, Integer> browsersCount;
+    HashSet<String> sites = new HashSet<>();
+    HashMap<String ,Integer> users = new HashMap<>();
+
 
 
     public Statistics() {
@@ -38,13 +41,63 @@ public class Statistics {
         getPagesNotFound(logEntry);
         getOsCount(logEntry);
         getBrowsersCount(logEntry);
-
+        getSite(logEntry);
+        addUser(logEntry);
 
     }
 
-    int getUnicIpAddr(List<LogEntry>logs){
-        return logs.stream()
-                .map(logEntry -> {String ip = logEntry.ipAddr;return ip;})
+    private void addUser(LogEntry logEntry) {
+if (logEntry.agent != null && logEntry.agent.isBot == false)
+if(users.containsKey(logEntry.ipAddr)) users.put(logEntry.ipAddr,(users.get(logEntry.ipAddr)+1));
+else users.put(logEntry.ipAddr, 1);
+    }
+
+    int getMaxVizitsForUser(HashMap<String,Integer> users){
+        return users.values().stream().max(Integer::compare).get();
+    }
+
+    int getAllVizits(HashMap<String,Integer> users){
+        return users.values().stream().reduce(0, Integer::sum);
+    }
+    void getSite(LogEntry logEntry) {
+        if (logEntry.site!=null)
+            sites.add(logEntry.site);
+    }
+
+
+    int getMaxAttendance(List<LogEntry> logs) {
+
+        List<LogEntry> vizitLogs = logs.stream().filter(logEntry ->
+                (logEntry.agent != null && logEntry.agent.isBot == false)).sorted(Comparator.comparing(logEntry -> logEntry.time)).
+                collect(Collectors.toList());
+        HashMap<Integer, Integer> attendanceStatistic = new HashMap<>();
+        LocalDateTime timeNow = vizitLogs.get(0).time;
+        int vizitCount = 1;
+        int second = 1;
+        attendanceStatistic.put(second, vizitCount);
+        for (int i = 1; i < vizitLogs.size(); i++) {
+            if (vizitLogs.get(i).time.equals(timeNow)) {
+                vizitCount++;
+                attendanceStatistic.put(second, vizitCount);
+            }
+            if (vizitLogs.get(i).time.isAfter(timeNow)) {
+                vizitCount = 1;
+                timeNow = logs.get(i).time;
+                second++;
+                attendanceStatistic.put(second, vizitCount);
+            }
+        }
+        return attendanceStatistic.values().stream().max(Integer::compare).get();
+
+    }
+
+    int getUnicIpAddr(List<LogEntry> logs) {
+        return logs.stream().filter(logEntry ->
+                        (logEntry.agent != null && logEntry.agent.isBot == false))
+                .map(logEntry -> {
+                    String ip = logEntry.ipAddr;
+                    return ip;
+                })
                 .collect(Collectors.toSet()).size();
     }
 
@@ -151,10 +204,12 @@ public class Statistics {
         return fullTime;
     }
 
-    int getAverageAttendance (List<LogEntry>logs){
-        return getVizitCount(logs)/getUnicIpAddr(logs);
+    int getAverageAttendance(List<LogEntry> logs) {
+        return getVizitCount(logs) / getUnicIpAddr(logs);
     }
-
+    int getAverageAttendance1(HashMap<String,Integer>users) {
+        return getAllVizits(users) / users.size();
+    }
     @Override
     public String toString() {
         return "Траффик: " + totalTraffic +
@@ -167,4 +222,7 @@ public class Statistics {
                 '}';
     }
 
+    public HashSet<String> getSites() {
+        return sites;
+    }
 }

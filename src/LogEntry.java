@@ -1,3 +1,4 @@
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -12,6 +13,7 @@ public class LogEntry {
     final int responceSize;
     final String referer;
     final UserAgent agent;
+    String site;
 
     public LogEntry(String line) {
         String[] fragments = line.split(" ");
@@ -23,6 +25,7 @@ public class LogEntry {
         this.responceCode = Integer.parseInt(fragments[8]);
         this.responceSize = Integer.parseInt(fragments[9]);
         this.referer = fragments[10].substring(1, (fragments[10].length() - 1));
+       this.setSite();;
         this.agent = new UserAgent(line);
     }
 
@@ -71,6 +74,15 @@ public class LogEntry {
                 ", referer='" + referer + '\'' +
                 ", agent=" + agent +
                 '}';
+    }
+
+    public void setSite() {
+
+        String temp = this.referer;
+        if (temp.contains("http")) {String[]fr = temp.split("/");
+            if(fr.length>=2)
+            this.site = fr[0]+"//"+fr[2];}
+
     }
 }
 
